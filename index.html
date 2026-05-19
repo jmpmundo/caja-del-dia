@@ -3,30 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#0F6E56" />
+  <meta name="theme-color" content="#0a5c47" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Caja del Día" />
   <title>Caja del Día</title>
   <link rel="manifest" href="manifest.json" />
-  <link rel="icon" type="image/svg+xml" href="icon.svg" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --verde: #0F6E56;
-      --verde-light: #E1F5EE;
-      --verde-dark: #085041;
-      --rojo: #A32D2D;
-      --rojo-light: #FCEBEB;
-      --gris-bg: #F5F5F5;
-      --gris-card: #FFFFFF;
-      --gris-border: #E0E0E0;
-      --gris-text: #666;
-      --text: #1a1a1a;
-      --radius: 12px;
-      --radius-sm: 8px;
+      --verde:        #0a7c5c;
+      --verde-dark:   #085c44;
+      --verde-header: #074d39;
+      --verde-light:  #d0f0e4;
+      --verde-mid:    #a8dfc9;
+      --rojo:         #c0392b;
+      --rojo-light:   #fdecea;
+      --gris-bg:      #eef2f0;
+      --gris-card:    #ffffff;
+      --gris-border:  #c8d8d2;
+      --gris-text:    #557060;
+      --text:         #1a2e26;
+      --radius:       14px;
+      --radius-sm:    9px;
+      --shadow:       0 2px 10px rgba(10,92,68,0.10);
+      --shadow-lg:    0 4px 20px rgba(10,92,68,0.18);
     }
 
     body {
@@ -34,271 +37,204 @@
       background: var(--gris-bg);
       color: var(--text);
       min-height: 100vh;
-      padding-bottom: 80px;
+      padding-bottom: 30px;
     }
 
     header {
-      background: var(--verde);
+      background: linear-gradient(160deg, var(--verde-dark) 0%, var(--verde-header) 100%);
       color: white;
-      padding: 48px 20px 20px;
+      padding: 52px 20px 24px;
       text-align: center;
+      position: relative;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.22);
     }
-    header h1 { font-size: 22px; font-weight: 600; letter-spacing: 0.3px; }
-    header p { font-size: 13px; opacity: 0.8; margin-top: 4px; }
+    header::after {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: -18px; left: 0; right: 0;
+      height: 36px;
+      background: var(--gris-bg);
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    }
+    header h1 { font-size: 24px; font-weight: 700; letter-spacing: 0.5px; text-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+    header p  { font-size: 13px; opacity: 0.78; margin-top: 5px; }
 
     nav {
       display: flex;
       background: var(--verde-dark);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      position: sticky; top: 0; z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
     }
     nav button {
-      flex: 1;
-      padding: 12px;
-      background: none;
-      border: none;
-      color: rgba(255,255,255,0.65);
-      font-size: 14px;
-      font-weight: 500;
+      flex: 1; padding: 13px;
+      background: none; border: none;
+      color: rgba(255,255,255,0.6);
+      font-size: 14px; font-weight: 600;
       cursor: pointer;
       border-bottom: 3px solid transparent;
+      letter-spacing: 0.2px;
       transition: all 0.2s;
     }
     nav button.active {
-      color: white;
-      border-bottom-color: white;
+      color: #fff;
+      border-bottom-color: #6effc9;
+      background: rgba(255,255,255,0.06);
     }
 
-    .section { display: none; padding: 16px; }
+    .section { display: none; padding: 28px 14px 14px; }
     .section.active { display: block; }
 
     .card {
       background: var(--gris-card);
       border-radius: var(--radius);
-      border: 1px solid var(--gris-border);
-      padding: 16px;
-      margin-bottom: 12px;
+      border: 1.5px solid var(--gris-border);
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow);
+    }
+    .card-title {
+      font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: var(--verde);
+      margin-bottom: 14px; padding-bottom: 8px;
+      border-bottom: 1.5px solid var(--verde-light);
     }
 
     .field { margin-bottom: 14px; }
+    .field:last-child { margin-bottom: 0; }
     .field label {
-      display: block;
-      font-size: 13px;
-      color: var(--gris-text);
-      margin-bottom: 6px;
-      font-weight: 500;
+      display: block; font-size: 12px;
+      color: var(--gris-text); margin-bottom: 6px;
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
     }
-    .field input[type=number],
-    .field input[type=text] {
-      width: 100%;
-      padding: 12px 14px;
-      font-size: 16px;
-      border: 1px solid var(--gris-border);
+    .field input {
+      width: 100%; padding: 13px 14px;
+      font-size: 17px; font-weight: 500;
+      border: 2px solid var(--gris-border);
       border-radius: var(--radius-sm);
-      background: var(--gris-bg);
-      color: var(--text);
-      outline: none;
-      -webkit-appearance: none;
+      background: #f4faf7; color: var(--text);
+      outline: none; -webkit-appearance: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
     .field input:focus {
-      border-color: var(--verde);
-      background: white;
+      border-color: var(--verde); background: white;
+      box-shadow: 0 0 0 3px rgba(10,124,92,0.12);
     }
 
-    .gastos-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-    .gastos-header span { font-size: 13px; color: var(--gris-text); font-weight: 500; }
-    .gastos-total { font-size: 15px; font-weight: 600; color: var(--rojo); }
+    .gastos-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .gastos-label  { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gris-text); }
+    .gastos-total  { font-size: 17px; font-weight: 700; color: var(--rojo); }
 
     .item-row {
-      display: flex;
-      align-items: center;
-      padding: 8px 0;
-      border-top: 1px solid var(--gris-border);
-      gap: 8px;
+      display: flex; align-items: center;
+      padding: 9px 0; border-top: 1.5px solid #e8f4ef; gap: 8px;
     }
-    .item-name { flex: 1; font-size: 14px; color: var(--text); text-transform: capitalize; }
-    .item-val { font-size: 14px; color: var(--gris-text); min-width: 70px; text-align: right; }
+    .item-name { flex: 1; font-size: 14px; font-weight: 500; color: var(--text); text-transform: capitalize; }
+    .item-val  { font-size: 14px; font-weight: 600; color: var(--rojo); min-width: 72px; text-align: right; }
     .del-btn {
-      background: var(--rojo-light);
-      border: none;
-      border-radius: 50%;
-      width: 28px;
-      height: 28px;
-      cursor: pointer;
-      color: var(--rojo);
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      background: #fde8e6; border: none; border-radius: 50%;
+      width: 30px; height: 30px; cursor: pointer;
+      color: var(--rojo); font-size: 18px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
 
-    .add-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px solid var(--gris-border);
-    }
-    .add-row input:first-child { flex: 2; }
-    .add-row input:nth-child(2) { flex: 1.3; }
+    .add-row { display: flex; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 2px dashed var(--gris-border); }
     .add-row input {
-      padding: 10px 10px;
-      font-size: 14px;
-      border: 1px solid var(--gris-border);
+      padding: 11px 10px; font-size: 14px;
+      border: 2px solid var(--gris-border);
       border-radius: var(--radius-sm);
-      background: var(--gris-bg);
-      color: var(--text);
-      outline: none;
-      -webkit-appearance: none;
-      min-width: 0;
+      background: #f4faf7; color: var(--text);
+      outline: none; -webkit-appearance: none; min-width: 0;
+      transition: border-color 0.2s;
     }
     .add-row input:focus { border-color: var(--verde); background: white; }
+    .add-row input:first-child { flex: 2; }
+    .add-row input:nth-child(2) { flex: 1.3; }
     .add-btn {
-      background: var(--verde);
-      color: white;
-      border: none;
+      background: var(--verde); color: white; border: none;
       border-radius: var(--radius-sm);
-      width: 42px;
-      height: 42px;
-      font-size: 22px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      width: 44px; height: 44px; font-size: 26px; font-weight: 300;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(10,92,68,0.25);
     }
 
     .btn-calc {
-      width: 100%;
-      padding: 15px;
-      background: var(--verde);
-      color: white;
-      border: none;
-      border-radius: var(--radius);
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 4px;
-      letter-spacing: 0.3px;
+      width: 100%; padding: 16px;
+      background: linear-gradient(135deg, var(--verde) 0%, var(--verde-dark) 100%);
+      color: white; border: none; border-radius: var(--radius);
+      font-size: 17px; font-weight: 700; cursor: pointer; margin-top: 4px;
+      letter-spacing: 0.4px; box-shadow: 0 4px 16px rgba(10,92,68,0.32);
     }
-    .btn-calc:active { opacity: 0.85; }
 
     .result-box {
-      background: var(--verde-light);
-      border-radius: var(--radius);
-      padding: 20px;
-      text-align: center;
-      margin-bottom: 12px;
-      border: 1px solid #9FE1CB;
+      background: linear-gradient(135deg, var(--verde) 0%, var(--verde-dark) 100%);
+      border-radius: var(--radius); padding: 24px 20px;
+      text-align: center; margin-bottom: 14px;
+      box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
     }
-    .result-box.negativo { background: var(--rojo-light); border-color: #F7C1C1; }
-    .result-label { font-size: 13px; color: var(--gris-text); margin-bottom: 6px; }
-    .result-amount { font-size: 34px; font-weight: 700; color: var(--verde-dark); }
-    .result-amount.negativo { color: var(--rojo); }
+    .result-box::before {
+      content: '💰'; position: absolute;
+      font-size: 80px; opacity: 0.08; right: -10px; top: -10px;
+    }
+    .result-box.negativo { background: linear-gradient(135deg, #c0392b 0%, #922b21 100%); }
+    .result-label  { font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+    .result-amount { font-size: 38px; font-weight: 800; color: white; text-shadow: 0 2px 6px rgba(0,0,0,0.2); }
 
     .breakdown-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 9px 0;
-      font-size: 14px;
-      border-bottom: 1px solid var(--gris-border);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 11px 0; font-size: 14px; border-bottom: 1.5px solid #e8f4ef;
     }
     .breakdown-row:last-child { border-bottom: none; }
-    .breakdown-row .lbl { color: var(--gris-text); }
-    .breakdown-row .val { font-weight: 600; }
+    .breakdown-row .lbl { color: var(--gris-text); font-weight: 500; }
+    .breakdown-row .val { font-weight: 700; font-size: 15px; }
     .val.pos { color: var(--verde); }
     .val.neg { color: var(--rojo); }
 
     .btn-save {
-      width: 100%;
-      padding: 14px;
-      background: var(--verde);
-      color: white;
-      border: none;
-      border-radius: var(--radius);
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 12px;
+      width: 100%; padding: 15px;
+      background: linear-gradient(135deg, var(--verde) 0%, var(--verde-dark) 100%);
+      color: white; border: none; border-radius: var(--radius);
+      font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 14px;
+      box-shadow: 0 4px 16px rgba(10,92,68,0.28);
     }
     .btn-link {
-      width: 100%;
-      padding: 10px;
-      background: none;
-      border: none;
-      color: var(--gris-text);
-      font-size: 14px;
-      cursor: pointer;
-      margin-top: 4px;
+      width: 100%; padding: 11px; background: none;
+      border: 2px solid var(--gris-border); border-radius: var(--radius);
+      color: var(--gris-text); font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px;
     }
 
-    .hist-empty {
-      text-align: center;
-      padding: 40px 20px;
-      color: var(--gris-text);
-      font-size: 14px;
-    }
-    .hist-empty span { font-size: 40px; display: block; margin-bottom: 12px; }
+    .hist-empty { text-align: center; padding: 50px 20px; color: var(--gris-text); font-size: 14px; }
+    .hist-empty span { font-size: 48px; display: block; margin-bottom: 14px; }
 
     .hist-card {
-      background: white;
-      border-radius: var(--radius);
-      border: 1px solid var(--gris-border);
-      padding: 14px 16px;
-      margin-bottom: 10px;
+      background: white; border-radius: var(--radius);
+      border: 1.5px solid var(--gris-border);
+      padding: 14px 16px; margin-bottom: 12px;
+      box-shadow: var(--shadow); overflow: hidden; position: relative;
     }
-    .hist-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
+    .hist-card::before {
+      content: ''; position: absolute;
+      left: 0; top: 0; bottom: 0; width: 4px;
+      background: var(--verde); border-radius: 4px 0 0 4px;
     }
-    .hist-fecha { font-size: 14px; font-weight: 600; color: var(--text); }
-    .hist-monto { font-size: 16px; font-weight: 700; }
+    .hist-card.neg-card::before { background: var(--rojo); }
+
+    .hist-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .hist-fecha { font-size: 14px; font-weight: 700; color: var(--text); }
+    .hist-monto { font-size: 17px; font-weight: 800; }
     .hist-monto.pos { color: var(--verde); }
     .hist-monto.neg { color: var(--rojo); }
-    .hist-detalle {
-      display: flex;
-      gap: 12px;
-      font-size: 12px;
-      color: var(--gris-text);
-      flex-wrap: wrap;
-    }
-    .hist-toggle {
-      background: none;
-      border: none;
-      color: var(--verde);
-      font-size: 12px;
-      cursor: pointer;
-      padding: 6px 0 0;
-      display: block;
-    }
-    .hist-items {
-      margin-top: 8px;
-      padding-top: 8px;
-      border-top: 1px solid var(--gris-border);
-    }
-    .hist-item { display: flex; justify-content: space-between; font-size: 13px; color: var(--gris-text); padding: 3px 0; }
-    .hist-del {
-      background: none;
-      border: none;
-      color: #ccc;
-      font-size: 18px;
-      cursor: pointer;
-      padding: 0;
-      line-height: 1;
-    }
-    .chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .chip::before { content: attr(data-icon); }
+
+    .hist-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    .chip { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 20px; border: 1.5px solid; }
+    .chip.v { color: var(--verde-dark); background: var(--verde-light); border-color: var(--verde-mid); }
+    .chip.g { color: var(--rojo); background: var(--rojo-light); border-color: #f5c0bc; }
+
+    .hist-toggle { background: none; border: none; color: var(--verde); font-size: 12px; font-weight: 600; cursor: pointer; padding: 7px 0 0; display: block; text-decoration: underline; }
+    .hist-items  { margin-top: 10px; padding-top: 10px; border-top: 1.5px solid #e8f4ef; }
+    .hist-item   { display: flex; justify-content: space-between; font-size: 13px; color: var(--gris-text); padding: 4px 0; }
+    .hist-del    { background: none; border: none; color: #bbb; font-size: 20px; cursor: pointer; padding: 0; line-height: 1; }
   </style>
 </head>
 <body>
@@ -315,25 +251,26 @@
 
 <div id="sect-calc" class="section active">
   <div class="card">
+    <div class="card-title">💵 Ingresos del día</div>
     <div class="field">
-      <label>💵 Vuelto que llevé</label>
+      <label>Vuelto que llevé</label>
       <input type="number" id="vuelto" placeholder="Ej: 3550" inputmode="decimal" />
     </div>
     <div class="field">
-      <label>💰 Total cobrado en ventas</label>
+      <label>Total cobrado en ventas</label>
       <input type="number" id="ventas" placeholder="Ej: 40500" inputmode="decimal" />
     </div>
   </div>
 
   <div class="card">
     <div class="gastos-header">
-      <span>🛒 Gastos personales</span>
+      <span class="gastos-label">🛒 Gastos personales</span>
       <span class="gastos-total" id="total-gastos-lbl">$0,00</span>
     </div>
     <div id="items-list"></div>
     <div class="add-row">
-      <input type="text" id="item-nombre" placeholder="Ej: pan" inputmode="text" />
-      <input type="number" id="item-monto" placeholder="Monto" inputmode="decimal" />
+      <input type="text"   id="item-nombre" placeholder="Ej: pan, nafta…" inputmode="text" />
+      <input type="number" id="item-monto"  placeholder="Monto" inputmode="decimal" />
       <button class="add-btn" onclick="agregarItem()">+</button>
     </div>
   </div>
@@ -342,7 +279,7 @@
 
   <div id="resultado" style="display:none; margin-top:16px">
     <div class="result-box" id="result-box">
-      <p class="result-label">Dinero en mano al final del día</p>
+      <p class="result-label">💼 Dinero en mano al cierre</p>
       <p class="result-amount" id="total-display">$0</p>
     </div>
     <div class="card" style="margin-bottom:0">
@@ -360,7 +297,7 @@
       </div>
     </div>
     <button class="btn-save" onclick="guardarYReset()">💾 Guardar en historial</button>
-    <button class="btn-link" onclick="soloReset()">↺ Nueva consulta sin guardar</button>
+    <button class="btn-link"  onclick="soloReset()">↺ Nueva consulta sin guardar</button>
   </div>
 </div>
 
@@ -369,7 +306,7 @@
 </div>
 
 <script>
-  const KEY = 'cajadeldia_historial';
+  const KEY = 'cajadeldia_v2';
   let items = [];
 
   const hoy = new Date();
@@ -389,8 +326,8 @@
   }
 
   function actualizarTotalGastos() {
-    const tot = items.reduce((a, i) => a + i.monto, 0);
-    document.getElementById('total-gastos-lbl').textContent = fmt(tot);
+    document.getElementById('total-gastos-lbl').textContent =
+      fmt(items.reduce((a, i) => a + i.monto, 0));
   }
 
   function renderItems() {
@@ -400,7 +337,7 @@
       const row = document.createElement('div');
       row.className = 'item-row';
       row.innerHTML =
-        '<span class="item-name">' + it.nombre + '</span>' +
+        '<span class="item-name">🛒 ' + it.nombre + '</span>' +
         '<span class="item-val">' + fmt(it.monto) + '</span>' +
         '<button class="del-btn" onclick="eliminarItem(' + idx + ')">×</button>';
       el.appendChild(row);
@@ -410,59 +347,49 @@
 
   function agregarItem() {
     const nombre = document.getElementById('item-nombre').value.trim();
-    const monto = parseFloat(document.getElementById('item-monto').value) || 0;
+    const monto  = parseFloat(document.getElementById('item-monto').value) || 0;
     if (!nombre || monto <= 0) return;
     items.push({ nombre, monto });
     document.getElementById('item-nombre').value = '';
-    document.getElementById('item-monto').value = '';
+    document.getElementById('item-monto').value  = '';
     renderItems();
     document.getElementById('item-nombre').focus();
   }
 
-  function eliminarItem(idx) {
-    items.splice(idx, 1);
-    renderItems();
-  }
+  function eliminarItem(idx) { items.splice(idx, 1); renderItems(); }
 
   function calcular() {
     const vuelto = parseFloat(document.getElementById('vuelto').value) || 0;
-    const ventas = parseFloat(document.getElementById('ventas').value) || 0;
-    const gastos = items.reduce((a, i) => a + i.monto, 0);
-    const total = vuelto + ventas - gastos;
+    const ventas  = parseFloat(document.getElementById('ventas').value)  || 0;
+    const gastos  = items.reduce((a, i) => a + i.monto, 0);
+    const total   = vuelto + ventas - gastos;
 
     document.getElementById('b-vuelto').textContent = fmt(vuelto);
     document.getElementById('b-ventas').textContent = fmt(ventas);
     document.getElementById('b-gastos').textContent = '−' + fmt(gastos);
 
-    const el = document.getElementById('total-display');
-    el.textContent = (total < 0 ? '−' : '') + fmt(total);
-    el.className = 'result-amount' + (total < 0 ? ' negativo' : '');
-
+    const el  = document.getElementById('total-display');
     const box = document.getElementById('result-box');
-    box.className = 'result-box' + (total < 0 ? ' negativo' : '');
+    el.textContent = (total < 0 ? '−' : '') + fmt(total);
+    box.className  = 'result-box' + (total < 0 ? ' negativo' : '');
 
     document.getElementById('resultado').style.display = 'block';
-    document.getElementById('resultado').scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => document.getElementById('resultado').scrollIntoView({ behavior: 'smooth' }), 50);
   }
 
-  function getHistorial() {
-    try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch(e) { return []; }
-  }
-  function saveHistorial(h) {
-    try { localStorage.setItem(KEY, JSON.stringify(h)); } catch(e) {}
-  }
+  function getHistorial()   { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch(e) { return []; } }
+  function saveHistorial(h) { try { localStorage.setItem(KEY, JSON.stringify(h)); } catch(e) {} }
 
   function guardarYReset() {
     const vuelto = parseFloat(document.getElementById('vuelto').value) || 0;
-    const ventas = parseFloat(document.getElementById('ventas').value) || 0;
-    const gastos = items.reduce((a, i) => a + i.monto, 0);
-    const total = vuelto + ventas - gastos;
+    const ventas  = parseFloat(document.getElementById('ventas').value)  || 0;
+    const gastos  = items.reduce((a, i) => a + i.monto, 0);
+    const total   = vuelto + ventas - gastos;
     const h = getHistorial();
     h.unshift({
-      fecha: hoy.toLocaleDateString('es-AR', { day:'2-digit', month:'2-digit', year:'numeric' }),
+      fecha:      hoy.toLocaleDateString('es-AR', { day:'2-digit', month:'2-digit', year:'numeric' }),
       fechaLarga: hoy.toLocaleDateString('es-AR', { weekday:'long', day:'2-digit', month:'long' }),
-      vuelto, ventas, gastos, total,
-      items: [...items]
+      vuelto, ventas, gastos, total, items: [...items]
     });
     saveHistorial(h);
     soloReset();
@@ -472,42 +399,43 @@
   function soloReset() {
     document.getElementById('vuelto').value = '';
     document.getElementById('ventas').value = '';
-    items = [];
-    renderItems();
+    items = []; renderItems();
     document.getElementById('resultado').style.display = 'none';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function renderHist() {
-    const h = getHistorial();
+    const h  = getHistorial();
     const el = document.getElementById('hist-container');
     if (!h.length) {
-      el.innerHTML = '<div class="hist-empty"><span>📭</span>Todavía no hay registros guardados.<br>Calculá tu primer día y guardalo.</div>';
+      el.innerHTML = '<div class="hist-empty"><span>📭</span>Todavía no hay registros.<br>Calculá tu primer día y guardalo.</div>';
       return;
     }
     el.innerHTML = '';
     h.forEach((rec, idx) => {
       const card = document.createElement('div');
-      card.className = 'hist-card';
-      const hasItems = rec.items && rec.items.length > 0;
+      card.className = 'hist-card' + (rec.total < 0 ? ' neg-card' : '');
       const tid = 'hi-' + idx;
+      const hasItems = rec.items && rec.items.length > 0;
       card.innerHTML =
         '<div class="hist-top">' +
           '<span class="hist-fecha">📅 ' + (rec.fechaLarga || rec.fecha) + '</span>' +
           '<div style="display:flex;align-items:center;gap:10px">' +
-            '<span class="hist-monto ' + (rec.total >= 0 ? 'pos' : 'neg') + '">' + (rec.total < 0 ? '−' : '') + fmt(rec.total) + '</span>' +
-            '<button class="hist-del" onclick="borrarReg(' + idx + ')" title="Borrar">🗑</button>' +
+            '<span class="hist-monto ' + (rec.total >= 0 ? 'pos' : 'neg') + '">' +
+              (rec.total < 0 ? '−' : '') + fmt(rec.total) +
+            '</span>' +
+            '<button class="hist-del" onclick="borrarReg(' + idx + ')">🗑</button>' +
           '</div>' +
         '</div>' +
-        '<div class="hist-detalle">' +
-          '<span>💵 ' + fmt(rec.vuelto) + '</span>' +
-          '<span>💰 ' + fmt(rec.ventas) + '</span>' +
-          '<span>🛒 ' + fmt(rec.gastos) + '</span>' +
+        '<div class="hist-chips">' +
+          '<span class="chip v">💵 ' + fmt(rec.vuelto) + '</span>' +
+          '<span class="chip v">💰 ' + fmt(rec.ventas) + '</span>' +
+          '<span class="chip g">🛒 ' + fmt(rec.gastos) + '</span>' +
         '</div>' +
         (hasItems ?
           '<button class="hist-toggle" onclick="toggleItems(\'' + tid + '\', this)">▼ Ver detalle de gastos</button>' +
           '<div id="' + tid + '" class="hist-items" style="display:none">' +
-            rec.items.map(it => '<div class="hist-item"><span>' + it.nombre + '</span><span>' + fmt(it.monto) + '</span></div>').join('') +
+            rec.items.map(it => '<div class="hist-item"><span>• ' + it.nombre + '</span><span>' + fmt(it.monto) + '</span></div>').join('') +
           '</div>'
         : '');
       el.appendChild(card);
@@ -518,15 +446,12 @@
     const el = document.getElementById(id);
     const vis = el.style.display !== 'none';
     el.style.display = vis ? 'none' : 'block';
-    btn.textContent = vis ? '▼ Ver detalle de gastos' : '▲ Ocultar detalle';
+    btn.textContent  = vis ? '▼ Ver detalle de gastos' : '▲ Ocultar detalle';
   }
 
   function borrarReg(idx) {
     if (!confirm('¿Borrar este registro?')) return;
-    const h = getHistorial();
-    h.splice(idx, 1);
-    saveHistorial(h);
-    renderHist();
+    const h = getHistorial(); h.splice(idx, 1); saveHistorial(h); renderHist();
   }
 
   document.getElementById('item-nombre').addEventListener('keydown', e => {
