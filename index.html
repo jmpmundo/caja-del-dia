@@ -12,7 +12,6 @@
   <link rel="manifest" href="manifest.json" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --verde:        #0a7c5c;
       --verde-dark:   #085c44;
@@ -31,210 +30,120 @@
       --shadow:       0 2px 10px rgba(10,92,68,0.10);
       --shadow-lg:    0 4px 20px rgba(10,92,68,0.18);
     }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--gris-bg); color: var(--text); min-height: 100vh; padding-bottom: 30px; }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--gris-bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding-bottom: 30px;
-    }
-
-    header {
-      background: linear-gradient(160deg, var(--verde-dark) 0%, var(--verde-header) 100%);
-      color: white;
-      padding: 52px 20px 24px;
-      text-align: center;
-      position: relative;
-      box-shadow: 0 3px 14px rgba(0,0,0,0.22);
-    }
-    header::after {
-      content: '';
-      display: block;
-      position: absolute;
-      bottom: -18px; left: 0; right: 0;
-      height: 36px;
-      background: var(--gris-bg);
-      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-    }
+    header { background: linear-gradient(160deg, var(--verde-dark) 0%, var(--verde-header) 100%); color: white; padding: 52px 20px 24px; text-align: center; position: relative; box-shadow: 0 3px 14px rgba(0,0,0,0.22); }
+    header::after { content: ''; display: block; position: absolute; bottom: -18px; left: 0; right: 0; height: 36px; background: var(--gris-bg); border-radius: 50% 50% 0 0 / 100% 100% 0 0; }
     header h1 { font-size: 24px; font-weight: 700; letter-spacing: 0.5px; text-shadow: 0 1px 4px rgba(0,0,0,0.2); }
     header p  { font-size: 13px; opacity: 0.78; margin-top: 5px; }
 
-    nav {
-      display: flex;
-      background: var(--verde-dark);
-      position: sticky; top: 0; z-index: 10;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
-    }
-    nav button {
-      flex: 1; padding: 13px;
-      background: none; border: none;
-      color: rgba(255,255,255,0.6);
-      font-size: 14px; font-weight: 600;
-      cursor: pointer;
-      border-bottom: 3px solid transparent;
-      letter-spacing: 0.2px;
-      transition: all 0.2s;
-    }
-    nav button.active {
-      color: #fff;
-      border-bottom-color: #6effc9;
-      background: rgba(255,255,255,0.06);
-    }
+    nav { display: flex; background: var(--verde-dark); position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
+    nav button { flex: 1; padding: 13px; background: none; border: none; color: rgba(255,255,255,0.6); font-size: 14px; font-weight: 600; cursor: pointer; border-bottom: 3px solid transparent; letter-spacing: 0.2px; transition: all 0.2s; }
+    nav button.active { color: #fff; border-bottom-color: #6effc9; background: rgba(255,255,255,0.06); }
 
     .section { display: none; padding: 28px 14px 14px; }
     .section.active { display: block; }
 
-    .card {
-      background: var(--gris-card);
-      border-radius: var(--radius);
-      border: 1.5px solid var(--gris-border);
-      padding: 18px;
-      margin-bottom: 14px;
-      box-shadow: var(--shadow);
-    }
-    .card-title {
-      font-size: 12px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 1px;
-      color: var(--verde);
-      margin-bottom: 14px; padding-bottom: 8px;
-      border-bottom: 1.5px solid var(--verde-light);
-    }
+    .card { background: var(--gris-card); border-radius: var(--radius); border: 1.5px solid var(--gris-border); padding: 18px; margin-bottom: 14px; box-shadow: var(--shadow); }
+    .card-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--verde); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1.5px solid var(--verde-light); }
 
     .field { margin-bottom: 14px; }
     .field:last-child { margin-bottom: 0; }
-    .field label {
-      display: block; font-size: 12px;
-      color: var(--gris-text); margin-bottom: 6px;
-      font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-    }
-    .field input {
-      width: 100%; padding: 13px 14px;
-      font-size: 17px; font-weight: 500;
-      border: 2px solid var(--gris-border);
-      border-radius: var(--radius-sm);
-      background: #f4faf7; color: var(--text);
-      outline: none; -webkit-appearance: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .field input:focus {
-      border-color: var(--verde); background: white;
-      box-shadow: 0 0 0 3px rgba(10,124,92,0.12);
-    }
+    .field label { display: block; font-size: 12px; color: var(--gris-text); margin-bottom: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    .field input { width: 100%; padding: 13px 14px; font-size: 17px; font-weight: 500; border: 2px solid var(--gris-border); border-radius: var(--radius-sm); background: #f4faf7; color: var(--text); outline: none; -webkit-appearance: none; transition: border-color 0.2s, box-shadow 0.2s; }
+    .field input:focus { border-color: var(--verde); background: white; box-shadow: 0 0 0 3px rgba(10,124,92,0.12); }
 
     .gastos-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
     .gastos-label  { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gris-text); }
     .gastos-total  { font-size: 17px; font-weight: 700; color: var(--rojo); }
 
-    .item-row {
-      display: flex; align-items: center;
-      padding: 9px 0; border-top: 1.5px solid #e8f4ef; gap: 8px;
-    }
+    .item-row { display: flex; align-items: center; padding: 9px 0; border-top: 1.5px solid #e8f4ef; gap: 8px; }
     .item-name { flex: 1; font-size: 14px; font-weight: 500; color: var(--text); text-transform: capitalize; }
     .item-val  { font-size: 14px; font-weight: 600; color: var(--rojo); min-width: 72px; text-align: right; }
-    .del-btn {
-      background: #fde8e6; border: none; border-radius: 50%;
-      width: 30px; height: 30px; cursor: pointer;
-      color: var(--rojo); font-size: 18px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    }
+    .del-btn { background: #fde8e6; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; color: var(--rojo); font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
     .add-row { display: flex; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 2px dashed var(--gris-border); }
-    .add-row input {
-      padding: 11px 10px; font-size: 14px;
-      border: 2px solid var(--gris-border);
-      border-radius: var(--radius-sm);
-      background: #f4faf7; color: var(--text);
-      outline: none; -webkit-appearance: none; min-width: 0;
-      transition: border-color 0.2s;
-    }
+    .add-row input { padding: 11px 10px; font-size: 14px; border: 2px solid var(--gris-border); border-radius: var(--radius-sm); background: #f4faf7; color: var(--text); outline: none; -webkit-appearance: none; min-width: 0; transition: border-color 0.2s; }
     .add-row input:focus { border-color: var(--verde); background: white; }
     .add-row input:first-child { flex: 2; }
     .add-row input:nth-child(2) { flex: 1.3; }
-    .add-btn {
-      background: var(--verde); color: white; border: none;
-      border-radius: var(--radius-sm);
-      width: 44px; height: 44px; font-size: 26px; font-weight: 300;
-      cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-      box-shadow: 0 2px 8px rgba(10,92,68,0.25);
-    }
+    .add-btn { background: var(--verde); color: white; border: none; border-radius: var(--radius-sm); width: 44px; height: 44px; font-size: 26px; font-weight: 300; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 8px rgba(10,92,68,0.25); }
 
-    .btn-calc {
-      width: 100%; padding: 16px;
-      background: linear-gradient(135deg, var(--verde) 0%, var(--verde-dark) 100%);
-      color: white; border: none; border-radius: var(--radius);
-      font-size: 17px; font-weight: 700; cursor: pointer; margin-top: 4px;
-      letter-spacing: 0.4px; box-shadow: 0 4px 16px rgba(10,92,68,0.32);
-    }
+    .btn-calc { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--verde) 0%, var(--verde-dark) 100%); color: white; border: none; border-radius: var(--radius); font-size: 17px; font-weight: 700; cursor: pointer; margin-top: 4px; letter-spacing: 0.4px; box-shadow: 0 4px 16px rgba(10,92,68,0.32); }
 
-    .result-box {
-      background: linear-gradient(135deg, var(--verde) 0%, var(--verde-dark) 100%);
-      border-radius: var(--radius); padding: 24px 20px;
-      text-align: center; margin-bottom: 14px;
-      box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
-    }
-    .result-box::before {
-      content: '💰'; position: absolute;
-      font-size: 80px; opacity: 0.08; right: -10px; top: -10px;
-    }
+    .result-box { background: linear-gradient(135deg, var(--verde) 0%, var(--verde-dark) 100%); border-radius: var(--radius); padding: 24px 20px; text-align: center; margin-bottom: 14px; box-shadow: var(--shadow-lg); position: relative; overflow: hidden; }
+    .result-box::before { content: '💰'; position: absolute; font-size: 80px; opacity: 0.08; right: -10px; top: -10px; }
     .result-box.negativo { background: linear-gradient(135deg, #c0392b 0%, #922b21 100%); }
     .result-label  { font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
     .result-amount { font-size: 38px; font-weight: 800; color: white; text-shadow: 0 2px 6px rgba(0,0,0,0.2); }
 
-    .breakdown-row {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 11px 0; font-size: 14px; border-bottom: 1.5px solid #e8f4ef;
-    }
+    .breakdown-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; font-size: 14px; border-bottom: 1.5px solid #e8f4ef; }
     .breakdown-row:last-child { border-bottom: none; }
     .breakdown-row .lbl { color: var(--gris-text); font-weight: 500; }
     .breakdown-row .val { font-weight: 700; font-size: 15px; }
     .val.pos { color: var(--verde); }
     .val.neg { color: var(--rojo); }
 
-    .btn-save {
-      width: 100%; padding: 15px;
-      background: linear-gradient(135deg, var(--verde) 0%, var(--verde-dark) 100%);
-      color: white; border: none; border-radius: var(--radius);
-      font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 14px;
-      box-shadow: 0 4px 16px rgba(10,92,68,0.28);
-    }
-    .btn-link {
-      width: 100%; padding: 11px; background: none;
-      border: 2px solid var(--gris-border); border-radius: var(--radius);
-      color: var(--gris-text); font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px;
-    }
+    .btn-save { width: 100%; padding: 15px; background: linear-gradient(135deg, var(--verde) 0%, var(--verde-dark) 100%); color: white; border: none; border-radius: var(--radius); font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 14px; box-shadow: 0 4px 16px rgba(10,92,68,0.28); }
+    .btn-link { width: 100%; padding: 11px; background: none; border: 2px solid var(--gris-border); border-radius: var(--radius); color: var(--gris-text); font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px; }
 
+    /* ── HISTORIAL ── */
     .hist-empty { text-align: center; padding: 50px 20px; color: var(--gris-text); font-size: 14px; }
     .hist-empty span { font-size: 48px; display: block; margin-bottom: 14px; }
 
-    .hist-card {
-      background: white; border-radius: var(--radius);
-      border: 1.5px solid var(--gris-border);
-      padding: 14px 16px; margin-bottom: 12px;
-      box-shadow: var(--shadow); overflow: hidden; position: relative;
+    /* Bloque semanal */
+    .semana-bloque { margin-bottom: 20px; }
+    .semana-header {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 10px;
     }
-    .hist-card::before {
-      content: ''; position: absolute;
-      left: 0; top: 0; bottom: 0; width: 4px;
-      background: var(--verde); border-radius: 4px 0 0 4px;
+    .semana-label {
+      font-size: 11px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 1.2px; color: var(--verde-dark);
+      background: var(--verde-light); border: 1.5px solid var(--verde-mid);
+      padding: 4px 12px; border-radius: 20px;
+      white-space: nowrap;
     }
-    .hist-card.neg-card::before { background: var(--rojo); }
+    .semana-line { flex: 1; height: 1.5px; background: var(--verde-mid); }
 
+    /* Resumen semanal */
+    .semana-resumen {
+      background: linear-gradient(135deg, var(--verde-dark) 0%, var(--verde-header) 100%);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .semana-resumen-title { font-size: 11px; color: rgba(255,255,255,0.7); font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px; }
+    .semana-col { text-align: center; }
+    .semana-val { font-size: 16px; font-weight: 800; color: white; }
+    .semana-val.neg { color: #ffaaaa; }
+    .semana-val.pos-neto { color: #6effc9; }
+    .semana-val.neg-neto { color: #ffaaaa; }
+    .semana-sep { width: 1px; background: rgba(255,255,255,0.2); align-self: stretch; min-height: 36px; }
+
+    /* Tarjeta de día */
+    .hist-card { background: white; border-radius: var(--radius); border: 1.5px solid var(--gris-border); padding: 14px 16px; margin-bottom: 10px; box-shadow: var(--shadow); overflow: hidden; position: relative; }
+    .hist-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--verde); border-radius: 4px 0 0 4px; }
+    .hist-card.neg-card::before { background: var(--rojo); }
     .hist-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
     .hist-fecha { font-size: 14px; font-weight: 700; color: var(--text); }
     .hist-monto { font-size: 17px; font-weight: 800; }
     .hist-monto.pos { color: var(--verde); }
     .hist-monto.neg { color: var(--rojo); }
-
     .hist-chips { display: flex; gap: 8px; flex-wrap: wrap; }
     .chip { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 20px; border: 1.5px solid; }
     .chip.v { color: var(--verde-dark); background: var(--verde-light); border-color: var(--verde-mid); }
     .chip.g { color: var(--rojo); background: var(--rojo-light); border-color: #f5c0bc; }
-
     .hist-toggle { background: none; border: none; color: var(--verde); font-size: 12px; font-weight: 600; cursor: pointer; padding: 7px 0 0; display: block; text-decoration: underline; }
-    .hist-items  { margin-top: 10px; padding-top: 10px; border-top: 1.5px solid #e8f4ef; }
-    .hist-item   { display: flex; justify-content: space-between; font-size: 13px; color: var(--gris-text); padding: 4px 0; }
-    .hist-del    { background: none; border: none; color: #bbb; font-size: 20px; cursor: pointer; padding: 0; line-height: 1; }
+    .hist-items { margin-top: 10px; padding-top: 10px; border-top: 1.5px solid #e8f4ef; }
+    .hist-item { display: flex; justify-content: space-between; font-size: 13px; color: var(--gris-text); padding: 4px 0; }
+    .hist-del { background: none; border: none; color: #bbb; font-size: 20px; cursor: pointer; padding: 0; line-height: 1; }
   </style>
 </head>
 <body>
@@ -283,18 +192,9 @@
       <p class="result-amount" id="total-display">$0</p>
     </div>
     <div class="card" style="margin-bottom:0">
-      <div class="breakdown-row">
-        <span class="lbl">💵 Vuelto inicial</span>
-        <span class="val pos" id="b-vuelto">$0</span>
-      </div>
-      <div class="breakdown-row">
-        <span class="lbl">💰 Ventas cobradas</span>
-        <span class="val pos" id="b-ventas">$0</span>
-      </div>
-      <div class="breakdown-row">
-        <span class="lbl">🛒 Gastos personales</span>
-        <span class="val neg" id="b-gastos">$0</span>
-      </div>
+      <div class="breakdown-row"><span class="lbl">💵 Vuelto inicial</span><span class="val pos" id="b-vuelto">$0</span></div>
+      <div class="breakdown-row"><span class="lbl">💰 Ventas cobradas</span><span class="val pos" id="b-ventas">$0</span></div>
+      <div class="breakdown-row"><span class="lbl">🛒 Gastos personales</span><span class="val neg" id="b-gastos">$0</span></div>
     </div>
     <button class="btn-save" onclick="guardarYReset()">💾 Guardar en historial</button>
     <button class="btn-link"  onclick="soloReset()">↺ Nueva consulta sin guardar</button>
@@ -363,16 +263,13 @@
     const ventas  = parseFloat(document.getElementById('ventas').value)  || 0;
     const gastos  = items.reduce((a, i) => a + i.monto, 0);
     const total   = vuelto + ventas - gastos;
-
     document.getElementById('b-vuelto').textContent = fmt(vuelto);
     document.getElementById('b-ventas').textContent = fmt(ventas);
     document.getElementById('b-gastos').textContent = '−' + fmt(gastos);
-
     const el  = document.getElementById('total-display');
     const box = document.getElementById('result-box');
     el.textContent = (total < 0 ? '−' : '') + fmt(total);
     box.className  = 'result-box' + (total < 0 ? ' negativo' : '');
-
     document.getElementById('resultado').style.display = 'block';
     setTimeout(() => document.getElementById('resultado').scrollIntoView({ behavior: 'smooth' }), 50);
   }
@@ -386,9 +283,12 @@
     const gastos  = items.reduce((a, i) => a + i.monto, 0);
     const total   = vuelto + ventas - gastos;
     const h = getHistorial();
+    // Guardar con fecha ISO para poder agrupar por semana
+    const ahora = new Date();
     h.unshift({
-      fecha:      hoy.toLocaleDateString('es-AR', { day:'2-digit', month:'2-digit', year:'numeric' }),
-      fechaLarga: hoy.toLocaleDateString('es-AR', { weekday:'long', day:'2-digit', month:'long' }),
+      fecha:      ahora.toLocaleDateString('es-AR', { day:'2-digit', month:'2-digit', year:'numeric' }),
+      fechaLarga: ahora.toLocaleDateString('es-AR', { weekday:'long', day:'2-digit', month:'long' }),
+      fechaISO:   ahora.toISOString().slice(0,10), // YYYY-MM-DD
       vuelto, ventas, gastos, total, items: [...items]
     });
     saveHistorial(h);
@@ -404,6 +304,28 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  // Obtiene el lunes de la semana de una fecha ISO (YYYY-MM-DD)
+  function getLunes(fechaISO) {
+    const d = new Date(fechaISO + 'T12:00:00');
+    const dia = d.getDay(); // 0=dom, 1=lun...
+    const diff = (dia === 0) ? -6 : 1 - dia; // retroceder al lunes
+    d.setDate(d.getDate() + diff);
+    return d.toISOString().slice(0,10);
+  }
+
+  function getDomingo(lunesISO) {
+    const d = new Date(lunesISO + 'T12:00:00');
+    d.setDate(d.getDate() + 6);
+    return d.toISOString().slice(0,10);
+  }
+
+  function formatRango(lunesISO, domingoISO) {
+    const opcDia = { day:'2-digit', month:'2-digit' };
+    const l = new Date(lunesISO + 'T12:00:00').toLocaleDateString('es-AR', opcDia);
+    const d = new Date(domingoISO + 'T12:00:00').toLocaleDateString('es-AR', opcDia);
+    return l + ' al ' + d;
+  }
+
   function renderHist() {
     const h  = getHistorial();
     const el = document.getElementById('hist-container');
@@ -411,34 +333,93 @@
       el.innerHTML = '<div class="hist-empty"><span>📭</span>Todavía no hay registros.<br>Calculá tu primer día y guardalo.</div>';
       return;
     }
-    el.innerHTML = '';
+
+    // Agrupar por semana (lunes como clave)
+    const semanas = {};
     h.forEach((rec, idx) => {
-      const card = document.createElement('div');
-      card.className = 'hist-card' + (rec.total < 0 ? ' neg-card' : '');
-      const tid = 'hi-' + idx;
-      const hasItems = rec.items && rec.items.length > 0;
-      card.innerHTML =
-        '<div class="hist-top">' +
-          '<span class="hist-fecha">📅 ' + (rec.fechaLarga || rec.fecha) + '</span>' +
-          '<div style="display:flex;align-items:center;gap:10px">' +
-            '<span class="hist-monto ' + (rec.total >= 0 ? 'pos' : 'neg') + '">' +
-              (rec.total < 0 ? '−' : '') + fmt(rec.total) +
-            '</span>' +
-            '<button class="hist-del" onclick="borrarReg(' + idx + ')">🗑</button>' +
+      // Compatibilidad: registros sin fechaISO
+      let iso = rec.fechaISO;
+      if (!iso) {
+        // Intentar parsear dd/mm/yyyy
+        const p = rec.fecha ? rec.fecha.split('/') : null;
+        iso = p ? p[2] + '-' + p[1] + '-' + p[0] : new Date().toISOString().slice(0,10);
+      }
+      const lunes = getLunes(iso);
+      if (!semanas[lunes]) semanas[lunes] = [];
+      semanas[lunes].push({ rec, idx });
+    });
+
+    el.innerHTML = '';
+    // Ordenar semanas de más reciente a más antigua
+    const luneses = Object.keys(semanas).sort((a,b) => b.localeCompare(a));
+
+    luneses.forEach(lunes => {
+      const dias = semanas[lunes];
+      const domingo = getDomingo(lunes);
+
+      // Totales de la semana
+      const totVentas = dias.reduce((s, d) => s + (d.rec.ventas || 0), 0);
+      const totGastos = dias.reduce((s, d) => s + (d.rec.gastos || 0), 0);
+      const totNeto   = dias.reduce((s, d) => s + (d.rec.total  || 0), 0);
+
+      const bloque = document.createElement('div');
+      bloque.className = 'semana-bloque';
+
+      // Encabezado de semana
+      bloque.innerHTML =
+        '<div class="semana-header">' +
+          '<span class="semana-label">📆 Semana ' + formatRango(lunes, domingo) + '</span>' +
+          '<div class="semana-line"></div>' +
+        '</div>' +
+        // Resumen semanal
+        '<div class="semana-resumen">' +
+          '<div class="semana-col">' +
+            '<div class="semana-resumen-title">💰 Ventas</div>' +
+            '<div class="semana-val">' + fmt(totVentas) + '</div>' +
           '</div>' +
-        '</div>' +
-        '<div class="hist-chips">' +
-          '<span class="chip v">💵 ' + fmt(rec.vuelto) + '</span>' +
-          '<span class="chip v">💰 ' + fmt(rec.ventas) + '</span>' +
-          '<span class="chip g">🛒 ' + fmt(rec.gastos) + '</span>' +
-        '</div>' +
-        (hasItems ?
-          '<button class="hist-toggle" onclick="toggleItems(\'' + tid + '\', this)">▼ Ver detalle de gastos</button>' +
-          '<div id="' + tid + '" class="hist-items" style="display:none">' +
-            rec.items.map(it => '<div class="hist-item"><span>• ' + it.nombre + '</span><span>' + fmt(it.monto) + '</span></div>').join('') +
-          '</div>'
-        : '');
-      el.appendChild(card);
+          '<div class="semana-sep"></div>' +
+          '<div class="semana-col">' +
+            '<div class="semana-resumen-title">🛒 Gastos</div>' +
+            '<div class="semana-val neg">' + fmt(totGastos) + '</div>' +
+          '</div>' +
+          '<div class="semana-sep"></div>' +
+          '<div class="semana-col">' +
+            '<div class="semana-resumen-title">💼 Neto</div>' +
+            '<div class="semana-val ' + (totNeto >= 0 ? 'pos-neto' : 'neg-neto') + '">' + (totNeto < 0 ? '−' : '') + fmt(totNeto) + '</div>' +
+          '</div>' +
+        '</div>';
+
+      // Tarjetas de cada día
+      dias.forEach(({ rec, idx }) => {
+        const card = document.createElement('div');
+        card.className = 'hist-card' + (rec.total < 0 ? ' neg-card' : '');
+        const tid = 'hi-' + idx;
+        const hasItems = rec.items && rec.items.length > 0;
+        card.innerHTML =
+          '<div class="hist-top">' +
+            '<span class="hist-fecha">📅 ' + (rec.fechaLarga || rec.fecha) + '</span>' +
+            '<div style="display:flex;align-items:center;gap:10px">' +
+              '<span class="hist-monto ' + (rec.total >= 0 ? 'pos' : 'neg') + '">' +
+                (rec.total < 0 ? '−' : '') + fmt(rec.total) +
+              '</span>' +
+              '<button class="hist-del" onclick="borrarReg(' + idx + ')">🗑</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="hist-chips">' +
+            '<span class="chip v">💵 ' + fmt(rec.vuelto) + '</span>' +
+            '<span class="chip v">💰 ' + fmt(rec.ventas) + '</span>' +
+            '<span class="chip g">🛒 ' + fmt(rec.gastos) + '</span>' +
+          '</div>' +
+          (hasItems ?
+            '<button class="hist-toggle" onclick="toggleItems(\'' + tid + '\', this)">▼ Ver detalle de gastos</button>' +
+            '<div id="' + tid + '" class="hist-items" style="display:none">' +
+              rec.items.map(it => '<div class="hist-item"><span>• ' + it.nombre + '</span><span>' + fmt(it.monto) + '</span></div>').join('') +
+            '</div>'
+          : '');
+        bloque.appendChild(card);
+      });
+
+      el.appendChild(bloque);
     });
   }
 
